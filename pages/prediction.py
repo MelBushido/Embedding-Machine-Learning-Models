@@ -18,7 +18,7 @@ st.set_page_config(
 
 st.title("Predict Customer Churn!")
 
-# URLs for loading models and encoder from GitHub (Ensure these are direct links to the raw files)
+# URLs for loading models and encoder from GitHub 
 github_model1_url = 'https://github.com/MelBushido/LP.2/raw/main/model/GradientBoosting.joblib'
 github_model2_url = 'https://github.com/MelBushido/LP.2/raw/main/model/SupportVector.joblib'
 encoder_url = 'https://github.com/MelBushido/LP.2/raw/main/model/label_encoder.joblib'
