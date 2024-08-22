@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+import plotly.graph_objs as go
 
 def data_page():
 
@@ -82,5 +85,42 @@ def data_page():
         **Churn** -- Whether the customer churned or not (Yes or No)
         ''')
              
+# Section: Data Visualizations
+    st.header("Data Visualizations")
+
+    # Create sidebar for selecting charts
+    chart_type = st.sidebar.selectbox('Select Chart Type', 
+                                      ('Bar Chart', 'Pie Chart', 'Correlation Heatmap', 'Box Plot'))
+
+    if chart_type == 'Bar Chart':
+        st.subheader("Bar Chart")
+        st.write("Select a categorical column for bar chart visualization:")
+        category_column = st.selectbox("Choose a column", df.select_dtypes(include='object').columns)
+        if category_column:
+            st.write(f"Bar Chart for {category_column}")
+            category_counts = df[category_column].value_counts().reset_index()
+            category_counts.columns = [category_column, 'count']
+            fig = px.bar(category_counts, x=category_column, y='count')
+            st.plotly_chart(fig)
+
+    elif chart_type == 'Pie Chart':
+        st.subheader("Pie Chart")
+        st.write("Select a categorical column for pie chart visualization:")
+        category_column = st.selectbox("Choose a column", df.select_dtypes(include='object').columns)
+        if category_column:
+            st.write(f"Pie Chart for {category_column}")
+            category_counts = df[category_column].value_counts().reset_index()
+            category_counts.columns = [category_column, 'count']
+            fig = px.pie(category_counts, names=category_column, values='count', title=f"Pie Chart of {category_column}")
+            st.plotly_chart(fig)
+    elif chart_type == 'Box Plot':
+        st.subheader("Box Plot")
+        st.write("Select a numeric column for box plot visualization:")
+        numeric_column = st.selectbox("Choose a column", df.select_dtypes(include='number').columns)
+        if numeric_column:
+            st.write(f"Box Plot for {numeric_column}")
+            fig = px.box(df, y=numeric_column)
+            st.plotly_chart(fig)
+
 if __name__ == '__main__':
     data_page()
