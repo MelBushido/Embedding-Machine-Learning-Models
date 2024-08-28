@@ -49,7 +49,7 @@ st.markdown("""
 # Contact Information
 st.subheader("Contact & Support")
 st.markdown("""
-For assistance or to provide feedback, please reach out to us at:
+For assistance or to provide feedback, please reach out at:
 - **Email**: daigurenfc@gmail.com
 - **Github**: https://github.com/MelBushido/Embedding-Machine-Learning-Models
 - **LinkedIn**: https://www.linkedin.com/in/melvin-suwiir-1318a4184/

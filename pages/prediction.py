@@ -95,8 +95,15 @@ def make_prediction(model, encoder):
     prediction_proba = model.predict_proba(data)
     st.session_state['prediction_proba'] = prediction_proba
 
+    # Create data directory if it doesn't exist
+    if not os.path.exists('./data'):
+        os.makedirs('./data')
+
     data['Churn'] = prediction
     data['Model'] = st.session_state['model_option']
+
+    # Save predictions to history CSV
+    data.to_csv('./data/history.csv', mode='a', header=not os.path.exists('./data/history.csv'), index=False)
 
     return prediction, prediction_proba
 
@@ -122,8 +129,8 @@ def input_features():
                          options=['Electronic check', 'Mailed check', 'Bank transfer (automatic)', 'Credit card (automatic)'],
                          key='payment_method')
             st.radio('Paperless Billing', ['Yes', 'No'], horizontal=True, key='paperless_billing')
-            st.number_input('Monthly Charges', placeholder='Enter amount...', key='monthly_charges')
-            st.number_input('Total Charges', placeholder='Enter amount...', key='total_charges')
+            st.number_input('Monthly Charges', min_value=0.0, max_value=1000.0, key='monthly_charges')
+            st.number_input('Total Charges', min_value=0.0, max_value=10000.0, key='total_charges')
 
         with col2:
             st.subheader('Subscriptions')
