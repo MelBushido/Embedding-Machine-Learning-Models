@@ -21,7 +21,7 @@ def load_data():
 def main():
     """Main function for the Streamlit app."""
     st.title("EDA & Analytics Dashboard")
-    st.write("Welcome to the comprehensive dashboard for Exploratory Data Analysis and Analytics!")
+    st.write("Welcome to the comprehensive dashboard for Exploratory Data Analysis and Analytics")
 
     # Sidebar for navigation
     st.sidebar.title("Navigation")
@@ -102,7 +102,7 @@ if not st.session_state["authenticated"]:
         if authenticate(username, password):
             st.session_state["authenticated"] = True
             st.sidebar.success("Login successful!")
-            st.experimental_rerun()  # Refresh to show main content
+            st.experimental_rerun()  
         else:
             st.sidebar.error("Invalid username or password")
 else:
