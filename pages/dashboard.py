@@ -7,13 +7,19 @@ st.set_page_config(page_title="EDA & Analytics Dashboard", page_icon=":bar_chart
 
 # -- Simple authentication
 def authenticate(username, password):
-    if username == "admin" and password == "password":
-        return True
-    else:
-        return False
+    """Authenticate user credentials."""
+    return username == "admin" and password == "password"
+
+# -- Load dataset
+@st.cache_data
+def load_data():
+    """Load dataset."""
+    df = pd.read_csv(r"C:\Users\user\Documents\New folder\LP.2\LP.2\Notebooks\churn_analysis.csv")
+    return df
 
 # -- Main function for the app
 def main():
+    """Main function for the Streamlit app."""
     st.title("EDA & Analytics Dashboard")
     st.write("Welcome to the comprehensive dashboard for Exploratory Data Analysis and Analytics!")
 
@@ -29,14 +35,9 @@ def main():
     elif option == "Analytics Dashboard":
         analytics_dashboard(df)
 
-# -- Load dataset
-@st.cache_data
-def load_data():
-    df = pd.read_csv(r"C:\Users\user\Documents\New folder\LP.2\LP.2\Notebooks\churn_analysis.csv")
-    return df
-
 # -- EDA Dashboard
 def eda_dashboard(df):
+    """Render the Exploratory Data Analysis Dashboard."""
     st.header("Exploratory Data Analysis")
 
     # Show dataset
@@ -64,11 +65,11 @@ def eda_dashboard(df):
 
 # -- Analytics Dashboard
 def analytics_dashboard(df):
+    """Render the Analytics Dashboard."""
     st.header("Analytics Dashboard")
 
     # Display KPIs
     st.subheader("Key Performance Indicators")
-    
     total_rows = df.shape[0]
     total_columns = df.shape[1]
     churn_rate = df['Churn'].value_counts(normalize=True).get('Yes', 0) * 100
@@ -101,6 +102,7 @@ if not st.session_state["authenticated"]:
         if authenticate(username, password):
             st.session_state["authenticated"] = True
             st.sidebar.success("Login successful!")
+            st.experimental_rerun()  # Refresh to show main content
         else:
             st.sidebar.error("Invalid username or password")
 else:
